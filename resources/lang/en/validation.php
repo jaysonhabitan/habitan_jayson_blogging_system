@@ -138,6 +138,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'data.attributes.slug' => [
+            'unique' => 'The slug has already been taken.',
+        ],
     ],
 
     /*

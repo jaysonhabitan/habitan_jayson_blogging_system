@@ -1,4 +1,4 @@
-<div class="py-4 bg-gray-100 border-t text-gray-600" style="min-height: 130px;">
+<div class="py-4 bg-gray-200 border-t bottom-0 text-gray-600" style="min-height: 130px;">
     <div class="flex space-x-6 px-10 items-center m-auto content-center text-left">
         <div class="w-3/12 font-light text-sm">
             Follow Us

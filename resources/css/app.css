@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .background-image {
   background-image: url('https://cdn.pixabay.com/photo/2017/10/14/11/02/background-2850204_960_720.jpg');
   background-position: center center;
@@ -11,6 +12,52 @@
   height: 600px; 
 }
 
+.btn:focus {
+  @apply outline-none
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50
+}
+
+
 .floating-action-bar {
-  @apply border-gray-100 border-b top-0 bg-white shadow fixed left-0 w-full z-20;
+  @apply border-gray-100 border-b top-0 bg-white shadow fixed left-0 w-full z-50;
+}
+
+.snackbar {
+  @apply bottom-2 shadow fixed left-2 z-50;
+}
+
+.card {
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 0.25rem;
+}
+
+[v-cloak] {
+  display:none;
+}
+
+.dropdown:focus-within .dropdown-menu {
+  opacity:1;
+  transform: translate(0) scale(1);
+  visibility: visible;
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+
+/* Toggle B */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
 }

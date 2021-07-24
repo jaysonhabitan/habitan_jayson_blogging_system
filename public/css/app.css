@@ -28556,21 +28556,6 @@ video {
   outline-offset: 2px;
 }
 
-.focus-within\:outline-none:focus-within {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.focus-within\:outline-white:focus-within {
-  outline: 2px dotted white;
-  outline-offset: 2px;
-}
-
-.focus-within\:outline-black:focus-within {
-  outline: 2px dotted black;
-  outline-offset: 2px;
-}
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -31864,11 +31849,26 @@ video {
   height: 600px;
 }
 
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  z-index: 50
+}
+
 .floating-action-bar {
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 20;
+  z-index: 50;
   width: 100%;
   border-bottom-width: 1px;
   --tw-border-opacity: 1;
@@ -31877,6 +31877,45 @@ video {
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
   --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.snackbar {
+  position: fixed;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  z-index: 50;
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.card {
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 0.25rem;
+}
+
+[v-cloak] {
+  display:none;
+}
+
+.dropdown:focus-within .dropdown-menu {
+  opacity:1;
+  transform: translate(0) scale(1);
+  visibility: visible;
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+
+/* Toggle B */
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
 }
 
 @media (min-width: 640px) {
@@ -59794,51 +59833,6 @@ video {
   .sm\:focus\:shadow-none:focus {
     --tw-shadow: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
-
-  .sm\:outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .sm\:outline-white {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .sm\:outline-black {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus-within\:outline-none:focus-within {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus-within\:outline-white:focus-within {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus-within\:outline-black:focus-within {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus\:outline-none:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus\:outline-white:focus {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .sm\:focus\:outline-black:focus {
-    outline: 2px dotted black;
-    outline-offset: 2px;
   }
 
   .sm\:ring-0 {
@@ -90959,51 +90953,6 @@ video {
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 
-  .md\:outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .md\:outline-white {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .md\:outline-black {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .md\:focus-within\:outline-none:focus-within {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .md\:focus-within\:outline-white:focus-within {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .md\:focus-within\:outline-black:focus-within {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .md\:focus\:outline-none:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .md\:focus\:outline-white:focus {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .md\:focus\:outline-black:focus {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
   .md\:ring-0 {
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -122120,51 +122069,6 @@ video {
   .lg\:focus\:shadow-none:focus {
     --tw-shadow: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
-
-  .lg\:outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .lg\:outline-white {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .lg\:outline-black {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus-within\:outline-none:focus-within {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus-within\:outline-white:focus-within {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus-within\:outline-black:focus-within {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus\:outline-none:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus\:outline-white:focus {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .lg\:focus\:outline-black:focus {
-    outline: 2px dotted black;
-    outline-offset: 2px;
   }
 
   .lg\:ring-0 {
@@ -153285,51 +153189,6 @@ video {
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 
-  .xl\:outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .xl\:outline-white {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .xl\:outline-black {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus-within\:outline-none:focus-within {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus-within\:outline-white:focus-within {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus-within\:outline-black:focus-within {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus\:outline-none:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus\:outline-white:focus {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .xl\:focus\:outline-black:focus {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
   .xl\:ring-0 {
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -184448,51 +184307,6 @@ video {
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 
-  .\32xl\:outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:outline-white {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:outline-black {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus-within\:outline-none:focus-within {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus-within\:outline-white:focus-within {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus-within\:outline-black:focus-within {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus\:outline-none:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus\:outline-white:focus {
-    outline: 2px dotted white;
-    outline-offset: 2px;
-  }
-
-  .\32xl\:focus\:outline-black:focus {
-    outline: 2px dotted black;
-    outline-offset: 2px;
-  }
-
   .\32xl\:ring-0 {
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -187693,4 +187507,3 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
-

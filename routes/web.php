@@ -31,7 +31,7 @@ Route::prefix('blogs')->group(function (){
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/posts', [PostController::class, 'store'])->name('blog.post');
-        Route::put('/posts/{post}', [PostController::class, 'update'])->name('blog.post.update');
+        Route::post('/posts/{post}', [PostController::class, 'update'])->name('blog.post.update');
         Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('blog.post.destroy');
     
         Route::get('/posts/me', [BlogController::class, 'index'])->name('blog.posts.me');
@@ -42,12 +42,13 @@ Route::middleware(['auth'])->group(function () {
     Route::name('post.')
         ->prefix('posts/{post}')
         ->group(function () {
-            Route::resource('comments', CommentController::class, ['except' => 'index']);
+            Route::resource('comments', CommentController::class, ['except' => ['index']]);
     });
 
     Route::prefix('manages')->group(function () {
         Route::resource('categories', CategoryController::class);
-        Route::resource('posts', PostController::class);
+        Route::post('posts/{post}', [PostController::class, 'update'])->name('manges.post_update');
+        Route::resource('posts', PostController::class, ['except' => ['update']]);
         Route::resource('users', UserController::class);
     });
 });

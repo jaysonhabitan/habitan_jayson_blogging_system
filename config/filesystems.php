@@ -14,7 +14,7 @@ return [
     */
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
-
+        
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -69,5 +69,4 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
-
 ];

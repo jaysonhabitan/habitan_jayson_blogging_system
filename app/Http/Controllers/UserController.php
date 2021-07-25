@@ -40,7 +40,7 @@ class UserController extends Controller
                     ->where('name', 'like', "%{$request->query('search')}%");
             })
             ->where('id', '!=', Auth::user()->id)
-            ->where('name', '!=', 'Super Admin')
+            ->where('id', '!=', 1)
             ->latest()
             ->with('roles.permissions')
             ->paginate(10);
@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('name', '!=', 'Super Admin')
+        $roles = Role::where('id', '!=', 1)
             ->with('permissions')->get();
         $permissions = Permission::get();
 
@@ -117,7 +117,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $roles = Role::where('name', '!=', 'Super Admin')
+        $roles = Role::where('id', '!=', 1)
             ->with('permissions')
             ->get();
         $permissions = Permission::get();

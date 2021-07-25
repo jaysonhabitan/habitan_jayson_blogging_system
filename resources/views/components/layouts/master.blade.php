@@ -22,10 +22,6 @@
 </head>
 
 <body class="bg-gray-100">
-  {{-- TODO: Disable fields/buttons when submitting --}}
-  {{-- TODO: Update table to break words --}}
-  {{-- TODO: Add rich text editor --}}
-  {{-- TODO: Add image upload to posts  --}}
   <div id="app">
       {{ $slot }}
 

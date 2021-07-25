@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
-class UsersTableSeeder extends Seeder
+class UsersTableSeeder extends PermissionsTableSeeder
 {
     /**
      * The user name.
@@ -32,18 +32,18 @@ class UsersTableSeeder extends Seeder
         DB::transaction(function () {
             
             collect($this->userNames)->each(function ($name) {
-                $user = User::create([
+                $userName = lcfirst(str_replace(' ', '', $name));
+
+                ${$userName} = User::create([
                     'name' => $name,
                     'email' => strtolower(join('-',explode(' ', $name))). "@gmail.com",
                     'password' => bcrypt('demo1234'),
                 ]);
 
-                $role = Role::where('name', $name)
-                    ->with('permissions')
-                    ->first();
+                $role = Role::where('name', $name)->first();
 
-                $user->syncRoles($role);
-                $user->syncPermissions($role->permissions);
+                ${$userName}->syncRoles($role);
+                ${$userName}->syncPermissions($this->{$userName."Permissions"});
             });
         });
     }

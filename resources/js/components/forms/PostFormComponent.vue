@@ -83,6 +83,16 @@
                   ></div>
                 </validation-provider>
 
+                <div class="mb-4">
+                  <label class="mb-2 text-sm font-bold text-gray-700">
+                      <file-btn-component accept=".jpg,.png" @upload="setImage" />
+                  </label>
+
+                  <div class="flex"> 
+                      <img :src="postImagePath" alt="" class=" mx-auto">
+                  </div>
+                </div>
+
                 <validation-provider
                   slim
                   rules="required"
@@ -111,7 +121,7 @@
                   ></div>
                 </validation-provider>
 
-                  <div class="mt-4" v-if="!post.published_at">
+                  <div class="mt-4" v-if="!post">
                      <input v-model="publish_now" type="checkbox" class="p-4 focus:outline-none cursor-pointer"/>
                     <span> Publish right away?</span>
                   </div>
@@ -170,6 +180,9 @@ export default {
     category_id: null,
     publish_now: false,
     published_at: null,
+
+    postImage: null,
+    postImagePath: null,
   }),
   
   watch: {
@@ -204,10 +217,52 @@ export default {
       if (this.post.published_at) {
         return moment(this.post.published_at).format('LL');
       }
+
+      return null;
+    },
+
+    formData() {
+      return {
+          data: {
+            attributes: {
+              title: this.title,
+              slug: this.slug,
+              body: this.body,
+              is_visible: this.is_visible,
+              publish_now: this.publish_now,
+              category_id: this.category_id,
+              image_path: this.postImage,
+            }
+          }
+        }
     }
   },
 
   methods: {
+    buildFormData(object) {
+      const formData = new FormData();
+
+      function appendToForm(data, parentKey) {
+        if (_.isArray(data) || _.isPlainObject(data)) {
+          if (_.size(data) > 0) {
+            _.each(data, (value, key) => {
+              appendToForm(value, parentKey ? `${parentKey}[${key}]` : key);
+            });
+          } else {
+            formData.append(parentKey, '');
+          }
+        } else if (_.isBoolean(data)) {
+          formData.append(parentKey, data ? 1 : 0);
+        } else if (!_.isUndefined(data)) {
+          formData.append(parentKey, data === null ? '' : data);
+        }
+      }
+
+      appendToForm(object);
+
+      return formData;
+    },
+
     setData() {
       if (this.post) {
         this.title = this.post.title;
@@ -218,7 +273,13 @@ export default {
         this.published_at = this.post.published_at;
 
         this.category_id = this.post.category_id;
+        this.postImagePath = this.post.image_path
       }
+    },
+
+    async setImage(files) {
+      this.postImage = await this.$_imageHandler.compressImage(files[0]);
+      this.postImagePath = await this.$_imageHandler.loadImage(this.postImage);
     },
 
     async submit() {
@@ -228,49 +289,28 @@ export default {
       }
 
       if (this.post) {
+        
         return axios
-          .put(`/manages/posts/${this.post.id}`, {
-          data: {
-            attributes: {
-              title: this.title,
-              body: this.body,
-              slug: this.slug,
-              is_visible: this.is_visible,
-              publish_now: this.publish_now,
-              category_id: this.category_id,
-            }
-          }
-        })
-        .then(() => {
-          this.$store.dispatch('setSnackbar', {
-            isVisible: true,
-            text: "Post updated successfully",
-            status: 'success'
-          });
+          .post(`/manages/posts/${this.post.id}`, this.buildFormData(this.formData))
+          .then(() => {
+            this.$store.dispatch('setSnackbar', {
+              isVisible: true,
+              text: "Post updated successfully",
+              status: 'success'
+            });
 
-          this.gotoPostList();
-        }, () => {
-          this.$store.dispatch('setSnackbar', {
-            isVisible: true,
-            text: this.$_errorParser.getFirstError(err),
-            status: 'danger'
+            this.gotoPostList();
+          }, (err) => {
+            this.$store.dispatch('setSnackbar', {
+              isVisible: true,
+              text: this.$_errorParser.getFirstError(err),
+              status: 'danger'
+            });
           });
-        });
       }
 
       axios
-        .post('/manages/posts', {
-          data: {
-            attributes: {
-              title: this.title,
-              slug: this.slug,
-              body: this.body,
-              is_visible: this.is_visible,
-              publish_now: this.publish_now,
-              category_id: this.category_id,
-            }
-          }
-        })
+        .post('/manages/posts', this.buildFormData(this.formData))
         .then(() => {
           this.$store.dispatch('setSnackbar', {
             isVisible: true,
@@ -279,7 +319,7 @@ export default {
           });
 
           this.gotoPostList();
-        }, () => {
+        }, (err) => {
           this.$store.dispatch('setSnackbar', {
             isVisible: true,
             text: this.$_errorParser.getFirstError(err),

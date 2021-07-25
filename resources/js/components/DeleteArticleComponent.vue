@@ -1,10 +1,10 @@
 <template>
   <t-modal
     v-model="value"
->
-<template v-slot:header>
+  >
+  <template v-slot:header>
     <div class="text-gray-500">
-      Are you sure you want to delete <span v-if="post" class="font-extrabold">{{ post.title}}?</span>
+      Are you sure you want to delete <span v-if="post" class="font-extrabold">{{ post.title }}?</span>
     </div>
   </template>
 
@@ -92,7 +92,7 @@ export default {
           } else {
             window.location.href = '/blogs/posts/me'
           }
-        }, () => {
+        }, (err) => {
           this.$store.dispatch('setSnackbar', {
               isVisible: true,
               text: this.$_errorParser.getFirstError(err),

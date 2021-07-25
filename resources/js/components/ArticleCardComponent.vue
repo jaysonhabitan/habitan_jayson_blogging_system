@@ -4,11 +4,11 @@
       <template v-slot:header>
         <div class="flex justify-between">
           <div class="text-xl text-gray-600 font-semibold">
-            {{ post.title }} 
+            {{ post.title }}
             <span class="italic font-normal text-base">
               by {{ post.author.name }} 
               <span v-if="post.published_at">
-                (Published At {{ formattedPublishDate }} | Published By {{ post.publisher.name }}) 
+                (Published At {{ formattedPublishDate }} | Published By {{ post.publisher.name }})
               </span>
             </span>
           </div>
@@ -62,9 +62,13 @@
         />
       </template>
 
-      <p class="text-lg px-4 text-gray-600 font-normal" style="white-space: pre-line">
+      <div class="text-gray-600 text-base mb-3" style="white-space: pre-line">
         {{ post.body }}
-      </p>
+      </div>
+
+      <div class="flex border border-gray-100 rounded w-full" v-if="post.image_path">
+        <img :src="post.image_path" class="mx-auto" />
+      </div>
       
       <template v-slot:footer >
         <div class="flex justify-end ">
@@ -89,7 +93,7 @@
         </span>
 
         <div v-if="user.id === comment.commenter.id && (canUpdateComment || canDeleteComment)" 
-          class="italic has-tooltip cursor-pointer hover:bg-gray-100 py-1" 
+          class="italic has-tooltip cursor-pointer hover:bg-gray-50 py-1 rounded px-2" 
           @click="parseComment(comment)" 
         >
           <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-gray-500 -mt-8'>
@@ -237,12 +241,6 @@
     </t-card>
     </div>
   </div>
-<!-- 
-  <article-form-component 
-    v-model="isModalVisible" 
-    :categories="categories" 
-    :post="post"
-  /> -->
 </template>
 
 <script>

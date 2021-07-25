@@ -90,7 +90,6 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import SwitchComponent from '../SwitchComponent.vue';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -100,7 +99,6 @@ export default {
   components: {
     ValidationObserver,
     ValidationProvider,
-    SwitchComponent,
   },
 
   props: {

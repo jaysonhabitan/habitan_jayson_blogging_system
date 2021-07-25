@@ -34,14 +34,11 @@ class RolesTableSeeder extends PermissionsTableSeeder
 
         DB::transaction(function () {
             collect($this->roles)->each(function ($roleName) {
-                //Make a dynamic variable name.
                 $variableRoleName = lcfirst(str_replace(' ', '', $roleName));
                 
                 ${$variableRoleName} = Role::create([
                     'name' => $roleName,
                 ]);
-
-                ${$variableRoleName}->givePermissionTo($this->{$variableRoleName."Permissions"});
             });
         });
     }

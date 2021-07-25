@@ -96,6 +96,10 @@ class PermissionsTableSeeder extends Seeder
         'create-post',
         'update-post',
         'delete-post',
+
+        'create-comment',
+        'update-comment',
+        'delete-comment',
     ];
 
     /**
@@ -107,6 +111,10 @@ class PermissionsTableSeeder extends Seeder
         'create-post',
         'update-post',
         'delete-post',
+
+        'create-comment',
+        'update-comment',
+        'delete-comment',
     ];
 
     /**

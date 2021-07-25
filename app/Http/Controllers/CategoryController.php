@@ -116,7 +116,11 @@ class CategoryController extends Controller
             'data' => 'required',
             'data.attributes' => 'required',
             'data.attributes.name' => 'required|string',
-            'data.attributes.slug' => 'required|string',
+            'data.attributes.slug' => [
+                'required',
+                'string',
+                Rule::unique('categories', 'slug')->ignore($category->id),
+            ],
             'data.attributes.description' => 'sometimes|nullable|string|max:255',
             'data.attributes.is_visible' => 'sometimes|boolean',
         ]);

@@ -76,6 +76,16 @@
           ></div>
         </validation-provider>
 
+        <div class="mb-4 mb-4">
+          <label class="mb-2 text-sm font-bold text-gray-700">
+                  <file-btn-component accept=".jpg,.png" @upload="setImage" />
+          </label>
+
+          <div class="flex"> 
+              <img :src="postImagePath" alt="" class="rounded mx-auto">
+          </div>
+        </div>
+
         <validation-provider
           slim
           rules="required"
@@ -160,6 +170,9 @@ export default {
     slug: null,
     body: null,
     category_id: null,
+
+    postImage: null,
+    postImagePath: null,
   }),
 
   watch: {
@@ -184,6 +197,20 @@ export default {
       return this.post
         ? 'Update'
         : 'Post'
+    },
+
+    formData() {
+      return {
+          data: {
+            attributes: {
+              title: this.title,
+              slug: this.slug,
+              body: this.body,
+              category_id: this.category_id,
+              image_path: this.postImage,
+            }
+          }
+        }
     }
   },
 
@@ -192,8 +219,37 @@ export default {
   },
 
   methods: {
+    buildFormData(object) {
+      const formData = new FormData();
+
+      function appendToForm(data, parentKey) {
+        if (_.isArray(data) || _.isPlainObject(data)) {
+          if (_.size(data) > 0) {
+            _.each(data, (value, key) => {
+              appendToForm(value, parentKey ? `${parentKey}[${key}]` : key);
+            });
+          } else {
+            formData.append(parentKey, '');
+          }
+        } else if (_.isBoolean(data)) {
+          formData.append(parentKey, data ? 1 : 0);
+        } else if (!_.isUndefined(data)) {
+          formData.append(parentKey, data === null ? '' : data);
+        }
+      }
+
+      appendToForm(object);
+
+      return formData;
+    },
+
     toggleModal() {
         this.$emit('toggle');
+    },
+
+    async setImage(files) {
+      this.postImage = await this.$_imageHandler.compressImage(files[0]);
+      this.postImagePath = await this.$_imageHandler.loadImage(this.postImage);
     },
 
     setData() {
@@ -202,6 +258,7 @@ export default {
         this.slug = this.post.slug;
         this.body = this.post.body;
         this.category_id = this.post.category_id;
+        this.postImagePath = this.post.image_path
       }
     },
 
@@ -213,44 +270,26 @@ export default {
 
       if (this.post) {
         return axios
-          .put(`/blogs/posts/${this.post.id}`, {
-            data: {
-              attributes: {
-                title: this.title,
-                body: this.body,
-                slug: this.slug,
-                category_id: this.category_id,
-              }
-            }
-        })
-        .then(() => {
-          this.$store.dispatch('setSnackbar', {
-            isVisible: true,
-            text: "Post updated successfully",
-            status: 'success'
-          });
-
-          this.gotoBlogList();
-        }, (err) => {
-          this.$store.dispatch('setSnackbar', {
+          .post(`/blogs/posts/${this.post.id}`, this.buildFormData(this.formData))
+          .then(() => {
+            this.$store.dispatch('setSnackbar', {
               isVisible: true,
-              text: this.$_errorParser.getFirstError(err),
-              status: 'danger'
+              text: "Post updated successfully",
+              status: 'success'
+            });
+
+            this.gotoBlogList();
+          }, (err) => {
+            this.$store.dispatch('setSnackbar', {
+                isVisible: true,
+                text: this.$_errorParser.getFirstError(err),
+                status: 'danger'
+            });
           });
-        });
       }
 
       axios
-        .post('/blogs/posts', {
-          data: {
-            attributes: {
-              title: this.title,
-              slug: this.slug,
-              body: this.body,
-              category_id: this.category_id,
-            }
-          }
-        })
+        .post('/blogs/posts', this.buildFormData(this.formData))
         .then(() => {
           this.$store.dispatch('setSnackbar', {
             isVisible: true,

@@ -21,8 +21,8 @@ class PostController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['role:Super Admin|Admin|Editor|Author'], ['except' => ['index', 'update','create','show', 'store', 'destroy']]); 
-        $this->middleware(['permission:manage-post'], ['except' => ['create', 'store', 'show', 'update', 'destroy']]); 
+        $this->middleware(['role:Super Admin|Admin|Editor|Author'], ['except' => ['index', 'update','show', 'store', 'destroy']]); 
+        $this->middleware(['permission:manage-post'], ['except' => ['store', 'show', 'update', 'destroy']]); 
         $this->middleware(['permission:create-post'], ['only' => ['create,', 'store']]); 
         $this->middleware(['permission:update-post'], ['only' => ['update', 'show']]); 
         $this->middleware(['permission:delete-post'], ['only' => ['destroy']]); 
@@ -89,8 +89,14 @@ class PostController extends Controller
         ]);
         
         return DB::transaction(function () use ($request, $user) {
-            $user->posts()->create($request->input('data.attributes'));
-            
+            $post = $user->posts()->make($request->input('data.attributes'));
+
+            if ($request->hasFile('data.attributes.image_path')) {
+                $post->uploadImage($request->file('data.attributes.image_path'));
+            }
+
+            $post->save();
+
             return $this->okResponse();
         });
     }
@@ -140,7 +146,13 @@ class PostController extends Controller
         ]);
         
         return DB::transaction(function () use ($request, $post) {
-            $post->update($request->input('data.attributes'));
+            $post->fill($request->input('data.attributes'));
+
+            if ($request->hasFile('data.attributes.image_path')) {
+                $post->uploadImage($request->file('data.attributes.image_path'));
+            }
+
+            $post->update();
             
             return $this->okResponse();
         });

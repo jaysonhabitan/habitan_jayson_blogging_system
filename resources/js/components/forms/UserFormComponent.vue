@@ -236,7 +236,7 @@ export default {
               });
 
           this.gotoUsersList();
-        }, () => {
+        }, (err) => {
           this.$store.dispatch('setSnackbar', {
             isVisible: true,
             text: this.$_errorParser.getFirstError(err),

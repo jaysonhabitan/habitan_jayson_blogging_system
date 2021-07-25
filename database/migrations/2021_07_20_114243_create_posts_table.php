@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->longtext('body');
             $table->string('slug');
+            $table->string('image_path')->nullable();
 
             $table->boolean('is_visible')->default(false);
 

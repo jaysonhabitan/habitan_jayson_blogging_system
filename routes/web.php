@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('manages')->group(function () {
         Route::resource('categories', CategoryController::class);
-        Route::post('posts/{post}', [PostController::class, 'update'])->name('manges.post_update');
+        Route::post('posts/{post}', [PostController::class, 'update'])->name('posts.post_update');
         Route::resource('posts', PostController::class, ['except' => ['update']]);
         Route::resource('users', UserController::class);
     });

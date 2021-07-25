@@ -91,7 +91,8 @@
                   ></div>
                 </validation-provider>
 
-                <t-checkbox-group 
+                <t-checkbox-group
+                  v-if="canManagePermission"
                   v-model="selectedPermissions" 
                   :options="formattedPermissions"
                 />
@@ -132,6 +133,11 @@ export default {
       default: null,
     },
 
+    admin: {
+      type: Object,
+      default: null,
+    },
+
     roles: {
       type: Array,
       defaul: () => [],
@@ -140,6 +146,11 @@ export default {
     permissions: {
       type: Array,
       defaul: () => [],
+    },
+    
+    rolePermissions: {
+      type: Object,
+      default: () => [],
     }
   },
 
@@ -168,6 +179,10 @@ export default {
         ? 'Edit'
         : 'Create'
     },
+    
+    canManagePermission() {
+      return _.find(this.admin.permissions, {name: 'manage-permission'}) !== undefined;
+    },
   },
 
   methods: {
@@ -193,13 +208,9 @@ export default {
         this.canChangePermission = true;
 
         return;
-      }
+      } 
 
-      const selectedRole = _.find(this.roles, {name: this.role});
-
-      this.selectedPermissions = _.map(selectedRole.permissions, (permission) => {
-          return permission.name
-      });
+      this.selectedPermissions = this.rolePermissions.[this.role];
     },
 
     filterPermissions() {

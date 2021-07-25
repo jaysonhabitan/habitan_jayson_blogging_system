@@ -61,10 +61,13 @@ class UserController extends Controller
         $roles = Role::where('id', '!=', 1)
             ->with('permissions')->get();
         $permissions = Permission::get();
+        $admin = User::find(Auth::user()->id);
 
         return view('pages.user.add', [
             'roles' => $roles,
+            'admin' => $admin->load('permissions'),
             'permissions' => $permissions,
+            'rolePermissions' => config('permission.role_permissions'),
         ]);
     }
 
@@ -116,6 +119,7 @@ class UserController extends Controller
     public function show(Request $request, int $id)
     {
         $user = User::find($id);
+        $admin = User::find(Auth::user()->id);
 
         $roles = Role::where('id', '!=', 1)
             ->with('permissions')
@@ -128,8 +132,10 @@ class UserController extends Controller
 
         return view('pages.user.add', [
             'user' => $user->load(['roles', 'permissions']),
+            'admin' => $admin->load('permissions'),
             'roles' => $roles,
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'rolePermissions' => config('permission.role_permissions'),
         ]);
     }
 

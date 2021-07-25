@@ -4036,6 +4036,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -4050,6 +4051,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: Object,
       "default": null
     },
+    admin: {
+      type: Object,
+      "default": null
+    },
     roles: {
       type: Array,
       defaul: function defaul() {
@@ -4059,6 +4064,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     permissions: {
       type: Array,
       defaul: function defaul() {
+        return [];
+      }
+    },
+    rolePermissions: {
+      type: Object,
+      "default": function _default() {
         return [];
       }
     }
@@ -4083,6 +4094,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     title: function title() {
       return this.user ? 'Edit' : 'Create';
+    },
+    canManagePermission: function canManagePermission() {
+      return lodash__WEBPACK_IMPORTED_MODULE_2___default().find(this.admin.permissions, {
+        name: 'manage-permission'
+      }) !== undefined;
     }
   },
   methods: {
@@ -4106,13 +4122,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return;
       }
 
-      var selectedRole = lodash__WEBPACK_IMPORTED_MODULE_2___default().find(this.roles, {
-        name: this.role
-      });
-
-      this.selectedPermissions = lodash__WEBPACK_IMPORTED_MODULE_2___default().map(selectedRole.permissions, function (permission) {
-        return permission.name;
-      });
+      this.selectedPermissions = this.rolePermissions[this.role];
     },
     filterPermissions: function filterPermissions() {
       this.formattedPermissions = lodash__WEBPACK_IMPORTED_MODULE_2___default().map(this.permissions, function (permission) {
@@ -63527,16 +63537,18 @@ var render = function() {
                       ])
                     }),
                     _vm._v(" "),
-                    _c("t-checkbox-group", {
-                      attrs: { options: _vm.formattedPermissions },
-                      model: {
-                        value: _vm.selectedPermissions,
-                        callback: function($$v) {
-                          _vm.selectedPermissions = $$v
-                        },
-                        expression: "selectedPermissions"
-                      }
-                    }),
+                    _vm.canManagePermission
+                      ? _c("t-checkbox-group", {
+                          attrs: { options: _vm.formattedPermissions },
+                          model: {
+                            value: _vm.selectedPermissions,
+                            callback: function($$v) {
+                              _vm.selectedPermissions = $$v
+                            },
+                            expression: "selectedPermissions"
+                          }
+                        })
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("div", { staticClass: "mb-6 text-center" }, [
                       _c(

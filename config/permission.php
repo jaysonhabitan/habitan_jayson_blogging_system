@@ -2,6 +2,90 @@
 
 return [
 
+    'role_permissions' => [
+        'Super Admin' => [
+            'manage-user',
+            'create-user',
+            'update-user',
+            'delete-user',
+            
+            'manage-permission',
+      
+            'manage-post',
+            'create-post',
+            'update-post',
+            'delete-post',
+      
+            'manage-category',
+            'create-category',
+            'update-category',
+            'delete-category',
+      
+            'create-comment',
+            'update-comment',
+            'delete-comment',
+          ],
+      
+          'Admin' => [
+            'manage-user',
+            'create-user',
+            'update-user',
+            
+            'manage-permission',
+      
+            'manage-post',
+            'create-post',
+            'update-post',
+            'delete-post',
+      
+            'manage-category',
+            'create-category',
+            'update-category',
+            'delete-category',
+      
+            'create-comment',
+            'update-comment',
+            'delete-comment',
+        ],
+      
+        'Editor' => [
+            'manage-post',
+            'create-post',
+            'update-post',
+            'delete-post',
+      
+            'manage-category',
+            'create-category',
+            'update-category',
+            'delete-category',
+      
+            'create-comment',
+            'update-comment',
+            'delete-comment',
+        ],
+      
+        'Author' => [
+            'manage-post',
+            'create-post',
+            'update-post',
+            'delete-post',
+      
+            'create-comment',
+            'update-comment',
+            'delete-comment',
+        ],
+      
+        'Contributor' => [
+            'create-post',
+            'update-post',
+            'delete-post',
+      
+            'create-comment',
+            'update-comment',
+            'delete-comment',
+        ],
+    ],
+
     'models' => [
 
         /*

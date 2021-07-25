@@ -18,12 +18,17 @@
           <user-form-component 
             :roles="{{ $roles }}"
             :user="{{ $user }}"
+            :admin="{{ $admin }}"
             :permissions="{{ $permissions }}"
+            :role-permissions="{{ json_encode($rolePermissions) }}"
+
           />
         @else 
           <user-form-component
             :roles="{{ $roles }}"
+            :admin="{{ $admin }}"
             :permissions="{{ $permissions }}"
+            :role-permissions="{{ json_encode($rolePermissions ) }}"
           />
         @endif
       </div>

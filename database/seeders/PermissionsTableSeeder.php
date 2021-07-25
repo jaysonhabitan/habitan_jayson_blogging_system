@@ -19,7 +19,6 @@ class PermissionsTableSeeder extends Seeder
         'update-user',
         'delete-user',
         
-        'manage-role',
         'manage-permission',
 
         'manage-post',
@@ -47,7 +46,6 @@ class PermissionsTableSeeder extends Seeder
         'create-user',
         'update-user',
         
-        'manage-role',
         'manage-permission',
 
         'manage-post',

@@ -1,4 +1,4 @@
-## Instruction to follow to start running the project (Please follow accordingly)
+## Instructions to follow to start running the project (Please follow accordingly)
 
 ```
 composer install

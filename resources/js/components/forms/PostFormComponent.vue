@@ -126,8 +126,13 @@
                     <span> Publish right away?</span>
                   </div>
 
-                  <div class="mt-4" v-else>
+                  <div class="mt-4" v-else-if="formattedPublishDate">
                     <span class="text-base font-bold italic">Published At {{ formattedPublishDate }}</span>
+                  </div>
+
+                  <div class="mt-4" v-else>
+                     <input v-model="publish_now" type="checkbox" class="p-4 focus:outline-none cursor-pointer"/>
+                    <span> Publish now?</span>
                   </div>
 
                 <div class="text-center">

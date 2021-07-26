@@ -73,12 +73,8 @@ class RegisterController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
     
-            $role = Role::where('name', 'Contributor')
-                ->with('permissions')
-                ->first();
-    
             $user->assignRole('Contributor');
-            $user->syncPermissions($role->permissions);
+            $user->syncPermissions(config('permissions.role_permissions.Contributor'));
     
             return $user;
         });

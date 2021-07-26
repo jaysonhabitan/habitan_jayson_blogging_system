@@ -48,13 +48,4 @@
     </div>
 
     <x-footer-banner />
-
-    <x-slot name="pageScript">
-        <script>
-        window.BLOG = {
-            PAGE: 'HomePage',
-        };
-
-        </script>
-    </x-slot>
 </x-layouts.master>

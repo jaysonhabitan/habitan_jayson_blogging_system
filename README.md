@@ -1,7 +1,7 @@
 ## Instruction to follow to start running the project (Please follow accordingly)
 
 ```
-compser install
+composer install
 ```
 
 ```

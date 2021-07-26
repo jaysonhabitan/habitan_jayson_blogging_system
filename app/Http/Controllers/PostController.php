@@ -148,6 +148,13 @@ class PostController extends Controller
         return DB::transaction(function () use ($request, $post) {
             $post->fill($request->input('data.attributes'));
 
+            if ($request->input('data.attributes.publish_now')) {
+                $post->forceFill([
+                    'published_by_id' => $request->user()->id,
+                    'published_at' => now()->toDateTimeString(),
+                ]);
+            }
+            
             if ($request->hasFile('data.attributes.image_path')) {
                 $post->uploadImage($request->file('data.attributes.image_path'));
             }

@@ -74,7 +74,7 @@ class RegisterController extends Controller
             ]);
     
             $user->assignRole('Contributor');
-            $user->syncPermissions(config('permissions.role_permission.Contributor'));
+            $user->syncPermissions(config('permission.role_permissions.Contributor'));
     
             return $user;
         });

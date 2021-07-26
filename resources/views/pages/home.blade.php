@@ -30,11 +30,11 @@
         <div class="w-3/5 p-20 pt-10 pb-10">
             @if ($post)
                 <div class="title text-xl font-bold mb-3 text-gray-600">
-                    {{ $post->title }} <span class="italic font-extrabold text-sm">by {{ $post->author->name }}</span>
+                    {{ $post->title ?? '' }} <span class="italic font-extrabold text-sm">by {{ $post->author->name ?? '' }}</span>
                 </div>
 
                 <div class="desciprtion text-gray-600 m-h-72 overflow-scroll overscroll-contain">
-                    {{ $post->body }}
+                    {{ $post->body ?? '' }}
                 </div>
             @endif
 
